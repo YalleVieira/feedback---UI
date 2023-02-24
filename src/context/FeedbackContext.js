@@ -11,7 +11,7 @@ export const FeedbackProvider = ({ children }) => {
       rating: 9,
     },
     {
-      id: 2,
+      id: 7,
       text: "This item is from ",
       rating: 10,
     },
