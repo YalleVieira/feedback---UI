@@ -7,7 +7,7 @@ const FeedbackStats = () => {
   //Calculate ratings avg
   let average =
     feedback.reduce((accumulator, currentValue) => {
-      return accumulator + currentValue.rating;
+      return accumulator + Number(currentValue.rating);
     }, 0) / feedback.length;
 
   average = average.toFixed(2).replace(/[.,]0$/, "");
