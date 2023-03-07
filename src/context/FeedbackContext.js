@@ -23,49 +23,37 @@ export const FeedbackProvider = ({ children }) => {
       .catch((err) => console.log(err));
   }, []);
 
-  /* const addFeedback = async (newFeedback) => {
+  //Add feedback
+  const addFeedback = (newFeedback) => {
     try {
-      const res = await fetch("/api/feedbacks", {
-        method: "POST",
-        body: JSON.stringify(newFeedback),
-      });
-
-      const json = await res.json();
-      setFeedback([...feedback, json.feedback]);
-      console.log(json);
+      setFeedback([newFeedback, ...feedback]);
     } catch (error) {
       console.log(error);
     }
-  }; */
-
-  //Add feedback
-  const addFeedback = async (newFeedback) => {
-    setFeedback([newFeedback, ...feedback]);
   };
 
   //Delete feedback
   const deleteFeedback = async (id) => {
-    if (window.confirm("Are you sure you want to delete?")) {
-      await fetch(`/feedback/${id}`, { method: "DELETE" });
-      setFeedback(feedback.filter((item) => item.id !== id));
+    try {
+      if (window.confirm("Are you sure you want to delete?")) {
+        setFeedback(feedback.filter((item) => item.id !== id));
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
   //Update feedback item
   const updateFeedback = async (id, updItem) => {
-    const response = await fetch(`/feedback/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updItem),
-    });
-
-    const data = await response.json();
-
-    setFeedback(
-      feedback.map((item) => (item.id === id ? { ...item, ...data } : item))
-    );
+    try {
+      setFeedback(
+        feedback.map((item) =>
+          item.id === id ? { ...item, ...updItem } : item
+        )
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   //Set item to be updated
