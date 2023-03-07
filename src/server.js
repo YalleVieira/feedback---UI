@@ -1,7 +1,5 @@
 import { Model, createServer } from "miragejs";
 
-const feedbacks = [];
-
 createServer({
   models: {
     feedback: Model,
