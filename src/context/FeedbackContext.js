@@ -13,31 +13,34 @@ export const FeedbackProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    fetchFeedback();
+    fetch("/api/feedbacks")
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json.feedbacks);
+        setFeedback(json.feedbacks);
+        setIsLoading(false);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
-  // Fetch feedback
-  const fetchFeedback = async () => {
-    const response = await fetch(`/feedback?_sort=id&_order=desc`);
-    const data = await response.json();
+  /* const addFeedback = async (newFeedback) => {
+    try {
+      const res = await fetch("/api/feedbacks", {
+        method: "POST",
+        body: JSON.stringify(newFeedback),
+      });
 
-    setFeedback(data);
-    setIsLoading(false);
-  };
+      const json = await res.json();
+      setFeedback([...feedback, json.feedback]);
+      console.log(json);
+    } catch (error) {
+      console.log(error);
+    }
+  }; */
 
   //Add feedback
   const addFeedback = async (newFeedback) => {
-    const response = await fetch("/feedback", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-
-      body: JSON.stringify(newFeedback),
-    });
-
-    const data = await response.json();
-    setFeedback([data, ...feedback]);
+    setFeedback([newFeedback, ...feedback]);
   };
 
   //Delete feedback
